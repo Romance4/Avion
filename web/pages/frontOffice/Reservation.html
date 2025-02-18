@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation de Vol</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 20px;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            margin: auto;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Réserver un Vol ✈️</h2>
+    
+    <form id="reservationForm">
+        <label for="iduser">Reservation au nom de : <span>RAKOTO Fitaratra</span></label>
+        <label for="idvol">ID du vol selectionne : <span>ERZ84F6E</span></label>
+        <input type="hidden" id="volselectionner" name="volselectionner" value="<%= idvol %>">
+        
+        <label for="nbrchaise">Nombre de sièges :</label>
+        <input type="number" id="nbrchaise" name="nbrchaise" min="1" required>
+
+        <label for="dtreservation">Date de réservation :</label>
+        <input type="text" id="dtreservation" name="dtreservation" readonly>
+
+        <button type="submit">Valider</button>
+    </form>
+
+</body>
+</html>
