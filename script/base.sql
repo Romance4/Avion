@@ -1,0 +1,83 @@
+CREATE TABLE avion (
+    id SERIAL PRIMARY KEY,
+    modele VARCHAR(100) NOT NULL,
+    dtfabrication DATE NOT NULL
+);
+CREATE TABLE typesiege (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE avionsiege (
+    id SERIAL PRIMARY KEY,
+    idavion INT NOT NULL,
+    idtypesiege INT NOT NULL,
+    nbr INT NOT NULL CHECK (nbr > 0),
+    FOREIGN KEY (idavion) REFERENCES avion(id) ON DELETE CASCADE,
+    FOREIGN KEY (idtypesiege) REFERENCES typesiege(id) ON DELETE CASCADE
+);
+
+CREATE TABLE ville (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL UNIQUE
+);
+CREATE TABLE vol (
+    id SERIAL PRIMARY KEY,
+    idavion INT NOT NULL,
+    dtdepart DATE NOT NULL,
+    idlieudepart INT NOT NULL,
+    dtarrive DATE NOT NULL,
+    idlieuarrive INT NOT NULL,
+    FOREIGN KEY (idavion) REFERENCES avion(id) ON DELETE CASCADE,
+    FOREIGN KEY (idlieudepart) REFERENCES ville(id) ON DELETE RESTRICT,
+    FOREIGN KEY (idlieuarrive) REFERENCES ville(id) ON DELETE RESTRICT,
+    CHECK (dtdepart < dtarrive),
+    -- CHECK (idlieudepart <> idlieuarrive) -- Empêche un vol d'avoir le même départ et arrivée
+);
+
+
+CREATE TABLE volprix (
+    idvol INT NOT NULL,
+    idtypesiege INT NOT NULL,
+    prixvol DECIMAL(10,2) NOT NULL CHECK (prixvol >= 0),
+    PRIMARY KEY (idvol, idtypesiege),
+    FOREIGN KEY (idvol) REFERENCES vol(id) ON DELETE CASCADE,
+    FOREIGN KEY (idtypesiege) REFERENCES typesiege(id) ON DELETE CASCADE
+);
+
+CREATE TABLE volenpromotion (
+    id SERIAL PRIMARY KEY,
+    idvol INT NOT NULL,
+    dtchange DATE NOT NULL,
+    pourcentage DECIMAL(5,2) NOT NULL CHECK (pourcentage BETWEEN 0 AND 100),
+    nbrchaisePromotion INT NOT NULL CHECK (nbrchaisePromotion >= 0),
+    idtypesiege INT NOT NULL,
+    FOREIGN KEY (idvol) REFERENCES vol(id) ON DELETE CASCADE,
+    FOREIGN KEY (idtypesiege) REFERENCES typesiege(id) ON DELETE CASCADE
+);
+
+CREATE TABLE user (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    mdp VARCHAR(255) NOT NULL,
+    nom VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE reservation (
+    id SERIAL PRIMARY KEY,
+    iduser INT NOT NULL,
+    idvol INT NOT NULL,
+    nbrchaise INT NOT NULL CHECK (nbrchaise > 0),
+    idtypesiege INT NOT NULL,
+    dtreservation DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (idtypesiege) REFERENCES typesiege(id) ON DELETE CASCADE,
+    FOREIGN KEY (iduser) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (idvol) REFERENCES vol(id) ON DELETE CASCADE
+);
+CREATE Table mvtResrvation(
+    id SERIAL PRIMARY KEY,
+    idvol INT NOT NULL,
+    finreservation DATE DEFAULT CURRENT_DATE,
+    finannulation DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (idvol) REFERENCES vol(id) ON DELETE CASCADE
+);

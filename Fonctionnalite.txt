@@ -1,0 +1,79 @@
+gestion avion
+-avion
+    *id
+    *modele
+    *dtfabrication
+-typesiege
+    *id
+    *nom
+-avionsiege
+    *id
+    *idavion
+    *idtypesiege
+    *nbr
+-vol
+    *id
+    *idavion
+    *dtdepart
+    *lieudepart
+    *dtarrive
+    *lieuarrive
+-volprix
+    *idvol
+    *idtypesiege
+    *prixvol
+-volenpromotion
+    *id
+    *idvol
+    *dtchange
+    *pourcentage
+    *nbrchaisePromotion
+    *idtypesiege
+-user 
+    *id
+    *email
+    *mdp
+    *nom
+-reservation
+    *iduser
+    *idvol
+    *nbrchaise
+    *dtreservation
+-ville
+    *id 
+    *nom
+    
+***LOGIN (EMAIL/MDP)
+    -affichage (ok)
+    -metier(ok)
+    -integration
+***FRONT OFFICE
+    -recherche multicritere vol
+            --affichage (ok)
+            --metier(ok)
+            --integration
+    -reserve un vol
+            --affichage (ok)
+            --metier(ok)
+            --integration
+***BACK OFFICE
+    -CRUD vol
+            --affichage ()
+            --metier(insert)(upadate)(delete)(ok)
+            --integration
+    -recherche multicritere vol
+            --affichage ()
+            --metier
+            --integration
+    -promotion par vol (en fonction des chaises par classe)
+            --affichage ()
+            --metier(ok)
+            --integration
+    -gestion de la fin des reservations(dure limite de reservation avant le vol)
+            --affichage ()
+            --metier(ok)
+            --integration
+    -gestion de l'annulation des reservations(dure limite d'annulation de reservation avant le vol)
+            --affichage ()
+            --metier(ok)
+            --integration

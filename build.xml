@@ -1,0 +1,80 @@
+<project name="Pharmacie" default="build" basedir=".">
+    <!-- Définir des propriétés pour répertoires -->
+    <property name="src.dir" value="src"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="bin.dir" value="bin"/>
+    <property name="temp.src.dir" value="temp_src"/>
+    <property name="webapp.dir" value="C:\Program Files\Apache Software Foundation\Tomcat 10.1\webapps"/>
+    <property name="web.dir" value="web"/>
+    <property name="war.name" value="Pharmacie"/>
+
+    <!-- Nettoyer les répertoires de compilation -->
+    <target name="clean">
+        <delete dir="${bin.dir}"/>
+        <delete dir="${temp.src.dir}"/>
+    </target>
+
+    <!-- Créer les répertoires nécessaires -->
+    <target name="init">
+        <mkdir dir="${bin.dir}"/>
+        <mkdir dir="${temp.src.dir}"/>
+    </target>
+
+    <!-- Copier les fichiers .java dans temp_src -->
+    <target name="copy-sources" depends="init">
+        <copy todir="${temp.src.dir}">
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+        </copy>
+    </target>
+
+    <!-- Compiler le projet -->
+    <target name="compile" depends="copy-sources">
+        <javac srcdir="${temp.src.dir}" destdir="${bin.dir}" includeantruntime="false" debug="true" debuglevel="vars">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- Créer le fichier WAR pour déploiement -->
+    <target name="package-war" depends="compile">
+        <mkdir dir="${web.dir}/WEB-INF/classes"/>
+        <mkdir dir="${web.dir}/WEB-INF/lib"/>
+        
+        <copy todir="${web.dir}/WEB-INF/classes">
+            <fileset dir="${bin.dir}" includes="**/*"/>
+        </copy>
+
+        <copy todir="${web.dir}/WEB-INF/lib">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+        </copy>
+        <war destfile="${war.name}.war" basedir="${web.dir}"/>
+    </target>
+
+    <!-- Déployer sur WildFly -->
+    <target name="deploy" depends="package-war">
+        <delete file="${webapp.dir}/${war.name}.war"/>
+        <delete file="${webapp.dir}/${war.name}.war.deployed"/>
+        <copy file="${war.name}.war" todir="${webapp.dir}"/>
+        <delete file="${war.name}.war"/>
+    </target>
+
+    <!-- La cible par défaut qui effectue build et déploiement -->
+    <target name="build" depends="deploy"/>
+</project>
+
+
+<!-- 
+
+Explication des cibles :
+clean : Supprime les répertoires de compilation et temporaires.
+init : Crée les répertoires nécessaires pour la compilation (bin et temp_src).
+copy-sources : Copie les fichiers sources Java depuis src vers le répertoire temporaire temp_src.
+compile : Compile les fichiers Java depuis temp_src vers bin avec le classpath de lib.
+package-war : Prépare l'archive WAR pour le déploiement en copiant les classes compilées dans WEB-INF/classes et crée le fichier WAR.
+deploy : Supprime les fichiers WAR précédemment déployés dans WildFly, copie le nouveau WAR, puis lance WildFly (standalone.bat).
+
+
+
+
+-->
