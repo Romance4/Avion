@@ -1,9 +1,10 @@
 package util;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 public class Promotion {
     int idPromotion;
-    Date datePromo;
+    Timestamp datePromo;
     double pourcentage;
     int nbrPromo;
     public int getNbrPromo() {
@@ -18,10 +19,10 @@ public class Promotion {
     public void setIdPromotion(int idPromotion) {
         this.idPromotion = idPromotion;
     }
-    public Date getDatePromo() {
+    public Timestamp getDatePromo() {
         return datePromo;
     }
-    public void setDatePromo(Date datePromo) {
+    public void setDatePromo(Timestamp datePromo) {
         this.datePromo = datePromo;
     }
     public double getPourcentage() {

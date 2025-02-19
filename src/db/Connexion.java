@@ -8,7 +8,7 @@ public class Connexion {
     public static Connection dbConnect() throws SQLException, Exception {
     try {
       Class.forName("org.postgresql.Driver");
-      Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/gestion_pharmacie",
+      Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/gestionvol",
               "postgres",
               "12345");
       return connection;

@@ -15,6 +15,11 @@ public class Avion {
     private int id;
     private String modele;
     private Date dateFabrication;
+    public Avion(String modele, Date dateFabrication) {
+        this.modele = modele;
+        this.dateFabrication = dateFabrication;
+    }
+
 
     // Constructeur par défaut
     public Avion() {}
@@ -25,6 +30,11 @@ public class Avion {
         this.modele = modele;
         this.dateFabrication = dateFabrication;
     }
+
+    public Avion(int i, String string) {
+        //TODO Auto-generated constructor stub
+    }
+
 
     // Getters et Setters
     public int getId() {
