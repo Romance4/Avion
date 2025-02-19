@@ -1,0 +1,21 @@
+login:
+    index.jsp
+        -frontOffice
+            *listvol.html
+                --listvol() dans vol
+                --recherche multi critere rechercherVolsFront(...)
+                --misy bouton reserve sur chaque vol mandefa ny idvol
+            *redirection vers reservation.html 
+                --insererReservation(...) avec mijery chaise disponible sy gestion de fin de reservation
+            *list reservation user 
+                --list reservation user getReservationsByUser(..)
+                --annulation reservation annulerReservation(...) avec gestion de fin annulation de Reservation
+        -BACK OFFICE
+            *listvol.html
+                --listvol() dans vol
+                --recherche multi critere rechercherVolsFront(...)
+                --misy bouton update/delete sur chaque vol mandefa ny idvol
+                --updateVol()/deleteVol()
+                --misy bouton ajout vol ajouterVol()
+                --misy bouton ajout promotion ny vol ajouterPromotion(...)
+                --misy bouton gestion fin reservation et fin annulation insererMvtReservation(...)
